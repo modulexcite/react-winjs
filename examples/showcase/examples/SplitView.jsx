@@ -19,7 +19,7 @@ var SplitViewButton = React.createClass({
 module.exports = React.createClass({
     handleTogglePane: function () {
         var splitView = this.refs.splitView.winControl;
-        splitView.paneHidden = !splitView.paneHidden;
+        splitView.paneOpened = !splitView.paneOpened;
     },
     handleChangeContent: function (newContent) {
         this.setState({ content: newContent });

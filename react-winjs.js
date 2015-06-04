@@ -49,58 +49,59 @@ var React = require('react');
 var RawControlApis = {
     AppBar: {
         closedDisplayMode: {
-            type: "string"
+            type: "enum",
+            values: [
+                "compact",
+                "full",
+                "minimal",
+                "none"
+            ]
         },
-        commands: {
-            name: "Array",
+        data: {
+            name: "WinJS.Binding.List",
             type: "reference",
             typeArguments: [
                 {
-                    name: "WinJS.UI.AppBarCommand",
+                    name: "WinJS.UI.ICommand",
                     type: "reference",
                     typeArguments: []
                 }
             ]
-        },
-        disabled: {
-            type: "boolean"
         },
         element: {
             name: "HTMLElement",
             type: "reference",
             typeArguments: []
         },
-        hidden: {
+        onAfterClose: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        onAfterOpen: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        onBeforeClose: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        onBeforeOpen: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        opened: {
             type: "boolean"
-        },
-        layout: {
-            type: "string"
-        },
-        onAfterHide: {
-            name: "Function",
-            type: "reference",
-            typeArguments: []
-        },
-        onAfterShow: {
-            name: "Function",
-            type: "reference",
-            typeArguments: []
-        },
-        onBeforeHide: {
-            name: "Function",
-            type: "reference",
-            typeArguments: []
-        },
-        onBeforeShow: {
-            name: "Function",
-            type: "reference",
-            typeArguments: []
         },
         placement: {
-            type: "string"
-        },
-        sticky: {
-            type: "boolean"
+            type: "enum",
+            values: [
+                "bottom",
+                "top"
+            ]
         }
     },
     AppBarCommand: {
@@ -146,6 +147,9 @@ var RawControlApis = {
             name: "Function",
             type: "reference",
             typeArguments: []
+        },
+        priority: {
+            type: "number"
         },
         section: {
             type: "string"
@@ -947,36 +951,27 @@ var RawControlApis = {
             type: "reference",
             typeArguments: []
         },
-        disabled: {
-            type: "boolean"
-        },
         element: {
             name: "HTMLElement",
             type: "reference",
             typeArguments: []
         },
-        hidden: {
-            type: "boolean"
-        },
-        layout: {
-            type: "string"
-        },
-        onAfterHide: {
+        onAfterClose: {
             name: "Function",
             type: "reference",
             typeArguments: []
         },
-        onAfterShow: {
+        onAfterOpen: {
             name: "Function",
             type: "reference",
             typeArguments: []
         },
-        onBeforeHide: {
+        onBeforeClose: {
             name: "Function",
             type: "reference",
             typeArguments: []
         },
-        onBeforeShow: {
+        onBeforeOpen: {
             name: "Function",
             type: "reference",
             typeArguments: []
@@ -986,11 +981,11 @@ var RawControlApis = {
             type: "reference",
             typeArguments: []
         },
+        opened: {
+            type: "boolean"
+        },
         placement: {
             type: "string"
-        },
-        sticky: {
-            type: "boolean"
         }
     },
     NavBarCommand: {
@@ -1071,6 +1066,16 @@ var RawControlApis = {
         }
     },
     Pivot: {
+        customLeftHeader: {
+            name: "HTMLElement",
+            type: "reference",
+            typeArguments: []
+        },
+        customRightHeader: {
+            name: "HTMLElement",
+            type: "reference",
+            typeArguments: []
+        },
         element: {
             name: "HTMLElement",
             type: "reference",
@@ -1259,6 +1264,13 @@ var RawControlApis = {
         }
     },
     SplitView: {
+        closedDisplayMode: {
+            type: "enum",
+            values: [
+                "inline",
+                "none"
+            ]
+        },
         contentElement: {
             name: "HTMLElement",
             type: "reference",
@@ -1269,39 +1281,39 @@ var RawControlApis = {
             type: "reference",
             typeArguments: []
         },
-        hiddenDisplayMode: {
+        onAfterClose: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        onAfterOpen: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        onBeforeClose: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        onBeforeOpen: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        openedDisplayMode: {
             type: "enum",
             values: [
                 "inline",
-                "none"
+                "overlay"
             ]
-        },
-        onAfterHide: {
-            name: "Function",
-            type: "reference",
-            typeArguments: []
-        },
-        onAfterShow: {
-            name: "Function",
-            type: "reference",
-            typeArguments: []
-        },
-        onBeforeHide: {
-            name: "Function",
-            type: "reference",
-            typeArguments: []
-        },
-        onBeforeShow: {
-            name: "Function",
-            type: "reference",
-            typeArguments: []
         },
         paneElement: {
             name: "HTMLElement",
             type: "reference",
             typeArguments: []
         },
-        paneHidden: {
+        paneOpened: {
             type: "boolean"
         },
         panePlacement: {
@@ -1312,13 +1324,23 @@ var RawControlApis = {
                 "right",
                 "top"
             ]
+        }
+    },
+    SplitViewPaneToggle: {
+        element: {
+            name: "HTMLButtonElement",
+            type: "reference",
+            typeArguments: []
         },
-        shownDisplayMode: {
-            type: "enum",
-            values: [
-                "inline",
-                "overlay"
-            ]
+        onInvoked: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        splitView: {
+            name: "HTMLElement",
+            type: "reference",
+            typeArguments: []
         }
     },
     TimePicker: {
@@ -1384,12 +1406,19 @@ var RawControlApis = {
         }
     },
     ToolBar: {
+        closedDisplayMode: {
+            type: "enum",
+            values: [
+                "compact",
+                "full"
+            ]
+        },
         data: {
             name: "WinJS.Binding.List",
             type: "reference",
             typeArguments: [
                 {
-                    name: "WinJS.UI.AppBarCommand",
+                    name: "WinJS.UI.ICommand",
                     type: "reference",
                     typeArguments: []
                 }
@@ -1400,11 +1429,28 @@ var RawControlApis = {
             type: "reference",
             typeArguments: []
         },
-        extraClass: {
-            type: "string"
+        onAfterClose: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
         },
-        shownDisplayMode: {
-            type: "string"
+        onAfterOpen: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        onBeforeClose: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        onBeforeOpen: {
+            name: "Function",
+            type: "reference",
+            typeArguments: []
+        },
+        opened: {
+            type: "boolean"
         }
     },
     Tooltip: {
@@ -2290,49 +2336,7 @@ var CommandSpecs = {
 var ControlApis = updateWithDefaults({
     AppBar: {
         propHandlers: {
-            children: {
-                preCtorInit: function AppBar_children_preCtorInit(element, options, data, displayName, propName, value) {
-                    var latest = processChildren(displayName, value, {});
-                    data[propName] = {
-                        winjsChildComponents: latest.childComponents,
-                        winjsChildComponentsMap: latest.childComponentsMap
-                    };
-
-                    options.commands = latest.childComponents.map(function (winjsChildComponent) {
-                        return winjsChildComponent.winControl;
-                    });
-                },
-                update: function AppBar_children_update(winjsComponent, propName, oldValue, newValue) {
-                    var data = winjsComponent.data[propName] || {};
-                    var oldChildComponents = data.winjsChildComponents || [];
-                    var oldChildComponentsMap = data.winjsChildComponentsMap || {};
-                    var latest = processChildren(winjsComponent.displayName, newValue, oldChildComponentsMap);
-
-                    if (!arraysShallowEqual(oldChildComponents, latest.childComponents)) {
-                        // TODO: There's currently a bug here because AppBar disposes all
-                        // current commands when setting commands even when some of the current
-                        // commands are in the new commands array. Maybe not worth finding a
-                        // workaround because WinJS's AppBar implementation is changing soon
-                        // and when that happens, we should be able to just use
-                        // syncChildrenWithBindingList.
-                        winjsComponent.winControl.commands = latest.childComponents.map(function (winjsChildComponent) {
-                            return winjsChildComponent.winControl;
-                        });
-                    
-                        winjsComponent.data[propName] = {
-                            winjsChildComponents: latest.childComponents,
-                            winjsChildComponentsMap: latest.childComponentsMap
-                        };
-                    }
-                },
-                dispose: function AppBar_children_dispose(winjsComponent, propName) {
-                    var data = winjsComponent.data[propName] || {};
-                    var childComponents = data.winjsChildComponents || [];
-                    childComponents.forEach(function (winjsChildComponent) {
-                        winjsChildComponent.dispose();
-                    });
-                }
-            }
+            children: PropHandlers.syncChildrenWithBindingList("data")
         }
     },
     "AppBar.Button": CommandSpecs.Button,

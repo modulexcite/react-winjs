@@ -1,5 +1,8 @@
 /** @jsx React.DOM */
 
+// TODO:
+// - SplitView API changes
+
 var React = require('react');
 var ReactWinJS = require('react-winjs');
 
@@ -23,7 +26,6 @@ var examples = [
     { title: "NavBar", componenent: require('./examples/NavBar.jsx') },
     { title: "Pivot", componenent: require('./examples/Pivot.jsx') },
     { title: "Rating", componenent: require('./examples/Rating.jsx') },
-    { title: "SearchBox", componenent: require('./examples/SearchBox.jsx') },
     { title: "SemanticZoom", componenent: require('./examples/SemanticZoom.jsx') },
     { title: "SplitView", componenent: require('./examples/SplitView.jsx') },
     { title: "TimePicker", componenent: require('./examples/TimePicker.jsx') },
@@ -57,7 +59,7 @@ var App = React.createClass({
     },
     render: function() {
         var tableOfContents = examples.map(function (example) {
-            return <li key={example.title}><a href={"#" + example.title}>{example.title}</a></li>;
+            return <li key={example.title}><a className="win-link" href={"#" + example.title}>{example.title}</a></li>;
         });
 
         var exampleMarkup = examples.map(function (example) {
@@ -65,7 +67,7 @@ var App = React.createClass({
 
             return (
                 <div style={styles.example} id={example.title} key={example.title} className="example">
-                    <h3 style={styles.exampleTitle}>
+                    <h3 className="win-h3" style={styles.exampleTitle}>
                         {example.title}
                         <a
                             style={styles.sourceLink}
@@ -85,9 +87,9 @@ var App = React.createClass({
         return (
             <div className="viewport" style={styles.viewport}>
                 <div className="surface" style={styles.surface}>
-                    <h1><a href="https://github.com/winjs/react-winjs">react-winjs</a> Control Showcase</h1>
+                    <h1 className="win-h1"><a href="https://github.com/winjs/react-winjs">react-winjs</a> Control Showcase</h1>
 
-                    <h3>Table of Contents</h3>
+                    <h3 className="win-h3">Table of Contents</h3>
                     <ul>{tableOfContents}</ul>
 
                     {exampleMarkup}
