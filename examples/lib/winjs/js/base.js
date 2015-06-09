@@ -12,7 +12,7 @@
             // amd
             define([], factory);
         } else {
-            globalObject.msWriteProfilerMark && msWriteProfilerMark('WinJS.4.0 4.0.0.winjs.2015.6.3 base.js,StartTM');
+            globalObject.msWriteProfilerMark && msWriteProfilerMark('$(TARGET_DESTINATION) $(build.version).$(build.branch).$(build.date) base.js,StartTM');
             if (typeof module !== 'undefined') {
                 // CommonJS
                 factory();
@@ -20,7 +20,7 @@
                 // No module system
                 factory(globalObject.WinJS);
             }
-            globalObject.msWriteProfilerMark && msWriteProfilerMark('WinJS.4.0 4.0.0.winjs.2015.6.3 base.js,StopTM');
+            globalObject.msWriteProfilerMark && msWriteProfilerMark('$(TARGET_DESTINATION) $(build.version).$(build.branch).$(build.date) base.js,StopTM');
         }
     }(function (WinJS) {
 
@@ -5183,7 +5183,7 @@ define('WinJS/Core/_BaseUtils',[
         _traceAsyncCallbackStarting: _Trace._traceAsyncCallbackStarting,
         _traceAsyncCallbackCompleted: _Trace._traceAsyncCallbackCompleted,
 
-        _version: "4.0.0"
+        _version: "$(build.version)"
     });
 
     _Base.Namespace._moduleDefine(exports, "WinJS", {
@@ -22509,8 +22509,8 @@ define('WinJS/BindingTemplate',[
         /// <htmlSnippet supportsContent="true"><![CDATA[<div data-win-control="WinJS.Binding.Template"><div>Place content here</div></div>]]></htmlSnippet>
         /// <icon src="base_winjs.ui.template.12x12.png" width="12" height="12" />
         /// <icon src="base_winjs.ui.template.16x16.png" width="16" height="16" />
-        /// <resource type="javascript" src="//WinJS.4.0/js/WinJS.js" shared="true" />
-        /// <resource type="css" src="//WinJS.4.0/css/ui-dark.css" shared="true" />
+        /// <resource type="javascript" src="//$(TARGET_DESTINATION)/js/WinJS.js" shared="true" />
+        /// <resource type="css" src="//$(TARGET_DESTINATION)/css/ui-dark.css" shared="true" />
         Template: _Base.Namespace._lazy(function () {
             function interpretedRender(template, dataContext, container) {
                 _WriteProfilerMark("WinJS.Binding:templateRender" + template._profilerMarkIdentifier + ",StartTM");
@@ -26458,8 +26458,8 @@ define('WinJS/Controls/HtmlControl',[
         /// <icon src="base_winjs.ui.htmlcontrol.12x12.png" width="12" height="12" />
         /// <icon src="base_winjs.ui.htmlcontrol.16x16.png" width="16" height="16" />
         /// <htmlSnippet><![CDATA[<div data-win-control="WinJS.UI.HtmlControl" data-win-options="{ uri: 'somePage.html' }"></div>]]></htmlSnippet>
-        /// <resource type="javascript" src="//WinJS.4.0/js/WinJS.js" shared="true" />
-        /// <resource type="css" src="//WinJS.4.0/css/ui-dark.css" shared="true" />
+        /// <resource type="javascript" src="//$(TARGET_DESTINATION)/js/WinJS.js" shared="true" />
+        /// <resource type="css" src="//$(TARGET_DESTINATION)/css/ui-dark.css" shared="true" />
         HtmlControl: _Base.Class.define(function HtmlControl_ctor(element, options, complete) {
             /// <signature helpKeyword="WinJS.UI.HtmlControl.HtmlControl">
             /// <summary locid="WinJS.UI.HtmlControl.constructor">
