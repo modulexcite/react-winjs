@@ -3,19 +3,6 @@
 var React = require('react');
 var ReactWinJS = require('react-winjs');
 
-// Also see CSS styles in index.html.
-
-var SplitViewButton = React.createClass({
-    render: function () {
-        return (
-            <button
-                onClick={this.props.onClick}
-                type="button"
-                className="win-splitview-button" />
-        );
-    }
-});
-
 module.exports = React.createClass({
     handleTogglePane: function () {
         var splitView = this.refs.splitView.winControl;
@@ -23,7 +10,7 @@ module.exports = React.createClass({
     },
     handleChangeContent: function (newContent) {
         this.setState({ content: newContent });
-        this.refs.splitView.winControl.paneHidden = true;
+        this.refs.splitView.winControl.paneOpened = false;
     },
     getInitialState: function () {
         return {
@@ -34,7 +21,7 @@ module.exports = React.createClass({
         var paneComponent = (
             <div>
                 <div>
-                    <SplitViewButton onClick={this.handleTogglePane} />
+                    <ReactWinJS.SplitViewPaneToggle onInvoked={this.handleTogglePane} />
                 </div>
 
                 <ReactWinJS.NavBarCommand
@@ -52,7 +39,7 @@ module.exports = React.createClass({
             </div>
         );
         var contentComponent = (
-            <h2 style={{marginLeft: "10px"}}>{this.state.content}</h2>
+            <h2 className="win-h2" style={{marginLeft: "10px"}}>{this.state.content}</h2>
         );
 
         return (

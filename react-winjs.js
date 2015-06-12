@@ -2474,7 +2474,9 @@ var ControlApis = updateWithDefaults({
     },
     Pivot: {
         propHandlers: {
-            children: PropHandlers.syncChildrenWithBindingList("items")
+            children: PropHandlers.syncChildrenWithBindingList("items"),
+            customLeftHeaderComponent: PropHandlers.propertyWithMount("customLeftHeader"),
+            customRightHeaderComponent: PropHandlers.propertyWithMount("customRightHeader")
         }
     },
     "Pivot.Item": {
@@ -2541,6 +2543,11 @@ var ControlApis = updateWithDefaults({
             contentComponent: PropHandlers.mountTo(function (winjsComponent) {
                 return winjsComponent.winControl.contentElement;
             })
+        }
+    },
+    SplitViewPaneToggle: {
+        render: function (component) {
+            return React.DOM.button();
         }
     },
     TimePicker: {},
