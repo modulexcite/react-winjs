@@ -1565,6 +1565,17 @@ function deparent(element) {
     parent && parent.removeChild(element);
 }
 
+function fireEvent(element, eventName) {
+    var eventObject = document.createEvent("CustomEvent");
+    eventObject.initCustomEvent(
+        eventName,
+        true,  // bubbles
+        false, // cancelable
+        null   // detail
+    );
+    element.dispatchEvent(eventObject);
+}
+
 function makeClassSet(className) {
     var classSet = {};
     className && className.split(" ").forEach(function (aClass) {
@@ -1808,6 +1819,22 @@ var PropHandlers = {
             update: function domProperty_update(winjsComponent, propName, oldValue, newValue) {
                 if (oldValue !== newValue) {
                     winjsComponent.element[propName] = newValue;
+                }
+            }
+        };
+    },
+
+    // Maps to an attribute on the winControl's element.
+    domAttribute: function (propType) {
+        return {
+            propType: propType,
+            update: function domAttribute_update(winjsComponent, propName, oldValue, newValue) {
+                if (oldValue !== newValue) {
+                    if (newValue !== null && newValue !== undefined) {
+                        winjsComponent.element.setAttribute(propName, "" + newValue);
+                    } else {
+                        winjsComponent.element.removeAttribute(propName);
+                    }
                 }
             }
         };
@@ -2199,9 +2226,12 @@ WinJSChildComponent.prototype.dispose = function () {
 var defaultPropHandlers = {
     className: PropHandlers.winControlClassName,
     style: PropHandlers.winControlStyle,
-    // TODO: Instead of special casing id, support DOM attributes
+
+    // TODO: Instead of special casing these, support DOM attributes
     // more generically.
-    id: PropHandlers.domProperty(React.PropTypes.string)
+    id: PropHandlers.domProperty(React.PropTypes.string),
+    "aria-controls": PropHandlers.domAttribute(React.PropTypes.any),
+    "aria-expanded": PropHandlers.domAttribute(React.PropTypes.any)
 };
 
 // Control-specific prop handlers derived from RawContorlApis
@@ -2548,6 +2578,61 @@ var ControlApis = updateWithDefaults({
     SplitViewPaneToggle: {
         render: function (component) {
             return React.DOM.button();
+        },
+        propHandlers: {
+            // paneOpened provides a React-friendly interface for making the SplitViewPaneToggle accessible.
+            // When paneOpened is specified, is not undefined, and is not null, it:
+            //  - Sets SplitViewPaneToggle's aria-expanded attribute to match paneOpened
+            //  - Fires SplitViewPaneToggle's "invoked" event when aria-expanded is mutated
+            paneOpened: {
+                propType: React.PropTypes.bool,
+                update: function paneOpened_update(winjsComponent, propName, oldValue, newValue) {
+                    var data = winjsComponent.data[propName];
+                    if (!data) {
+                        data = {
+                            // WinJS.UI.SplitViewPaneToggle depends on WinJS.Utilities._MutationObserver so it
+                            // is safe to use it here.
+                            ariaExpandedMutationObserver: new WinJS.Utilities._MutationObserver(function () {
+                                var element = winjsComponent.element;
+                                var ariaExpanded = (element.getAttribute("aria-expanded") === "true");
+                                if (ariaExpanded !== winjsComponent.data[propName].value) {
+                                    fireEvent(element, "invoked"); // Fire WinJS.UI.SplitViewPaneToggle's invoked event
+                                }
+                            }),
+                            observing: false,
+                            value: newValue
+                        };
+                        winjsComponent.data[propName] = data;
+                    }
+
+                    if (oldValue !== newValue) {
+                        if (newValue !== null && newValue !== undefined) {
+                            winjsComponent.element.setAttribute("aria-expanded", newValue ? "true" : "false");
+                            if (!data.observing) {
+                                data.observing = true;
+                                data.ariaExpandedMutationObserver.observe(winjsComponent.element, {
+                                    attributes: true,
+                                    attributeFilter: ["aria-expanded"]
+                                });
+                            }
+                        } else {
+                            winjsComponent.element.removeAttribute("aria-expanded");
+                            if (data.observing) {
+                                data.observing = false;
+                                data.ariaExpandedMutationObserver.disconnect();
+                            }
+                        }
+                    }
+
+                    data.value = newValue;
+                },
+                dispose: function paneOpened_dispose(winjsComponent, propName) {
+                    var data = winjsComponent.data[propName];
+                    if (data && data.observing) {
+                        data.ariaExpandedMutationObserver.disconnect();
+                    }
+                }
+            }
         }
     },
     TimePicker: {},

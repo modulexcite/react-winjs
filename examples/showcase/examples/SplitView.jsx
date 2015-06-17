@@ -3,25 +3,35 @@
 var React = require('react');
 var ReactWinJS = require('react-winjs');
 
+var splitViewId = "mainSplitView";
+
 module.exports = React.createClass({
     handleTogglePane: function () {
-        var splitView = this.refs.splitView.winControl;
-        splitView.paneOpened = !splitView.paneOpened;
+        this.setState({ paneOpened: !this.state.paneOpened });
+    },
+    handleAfterClose: function () {
+        this.setState({ paneOpened: false });
     },
     handleChangeContent: function (newContent) {
-        this.setState({ content: newContent });
-        this.refs.splitView.winControl.paneOpened = false;
+        this.setState({
+            content: newContent,
+            paneOpened: false
+        });
     },
     getInitialState: function () {
         return {
-            content: "Home"
+            content: "Home",
+            paneOpened: false
         };
     },
     render: function () {
         var paneComponent = (
             <div>
                 <div>
-                    <ReactWinJS.SplitViewPaneToggle onInvoked={this.handleTogglePane} />
+                    <ReactWinJS.SplitViewPaneToggle
+                        aria-controls={splitViewId}
+                        paneOpened={this.state.paneOpened}
+                        onInvoked={this.handleTogglePane} />
                 </div>
 
                 <ReactWinJS.NavBarCommand
@@ -44,10 +54,12 @@ module.exports = React.createClass({
 
         return (
             <ReactWinJS.SplitView
-                ref="splitView"
+                id={splitViewId}
                 style={{height: "300px"}}
                 paneComponent={paneComponent}
-                contentComponent={contentComponent} />
+                contentComponent={contentComponent}
+                paneOpened={this.state.paneOpened}
+                onAfterClose={this.handleAfterClose} />
         );
     }
 });

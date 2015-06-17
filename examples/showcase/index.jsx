@@ -1,8 +1,5 @@
 /** @jsx React.DOM */
 
-// TODO:
-// - SplitView API changes
-
 var React = require('react');
 var ReactWinJS = require('react-winjs');
 
