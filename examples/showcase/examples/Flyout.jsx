@@ -8,16 +8,7 @@ module.exports = React.createClass({
         var anchor = eventObject.currentTarget;
         this.refs.flyout.winControl.show(anchor);
     },
-    getInitialState: function () {
-        return {
-            dialogResult: null
-        };
-    },
     render: function () {
-        var dialogResult = this.state.dialogResult ?
-            <div>Dialog Result: {this.state.dialogResult}</div> :
-            null;
-
         return (
             <div>
                 <button className="win-button" onClick={this.handleShow}>Show Flyout</button>
