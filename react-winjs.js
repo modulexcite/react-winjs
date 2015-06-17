@@ -1653,7 +1653,6 @@ function diffArraysByKey(old, latest) {
         var item = old[i];
         if (!latestIndex.hasOwnProperty(item.key)) {
             edits.push({ type: "delete", index: i });
-            console.log(JSON.stringify(edits[edits.length - 1]));
             old.splice(i, 1);
         }
     }
@@ -1664,7 +1663,6 @@ function diffArraysByKey(old, latest) {
         if (!oldIndex.hasOwnProperty(item.key)) {
             // Insertion
             edits.push({ type: "insert", index: i, value: item });
-            console.log(JSON.stringify({ type: "insert", index: i, value: item.key }));
             old.splice(i, 0, item);
         } else if (old[i].key !== item.key) {
             // Move
@@ -1673,7 +1671,6 @@ function diffArraysByKey(old, latest) {
 
             var fromIndex = indexOfKey(old, item.key);
             edits.push({ type: "move", from: fromIndex, to: i });
-            console.log(JSON.stringify(edits[edits.length - 1]));
             old.splice(fromIndex, 1);
             old.splice(i, 0, item);
         }
