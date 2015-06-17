@@ -2224,7 +2224,7 @@ var defaultPropHandlers = {
     "aria-expanded": PropHandlers.domAttribute(React.PropTypes.any)
 };
 
-// Control-specific prop handlers derived from RawContorlApis
+// Control-specific prop handlers derived from RawControlApis
 var DefaultControlPropHandlers = (function processRawApis() {
     var keepProperty = function keepProperty(propertyName) {
         return !endsWith(propertyName.toLowerCase(), "element");
