@@ -344,6 +344,9 @@ var RawControlApis = {
             type: "reference",
             typeArguments: []
         },
+        disabled: {
+            type: "boolean"
+        },
         element: {
             name: "HTMLElement",
             type: "reference",
@@ -829,6 +832,9 @@ var RawControlApis = {
                     typeArguments: []
                 }
             ]
+        },
+        disabled: {
+            type: "boolean"
         },
         element: {
             name: "HTMLElement",
