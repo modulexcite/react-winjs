@@ -2437,6 +2437,7 @@ var ControlApis = updateWithDefaults({
     // ListLayout: Not a component so just use off of WinJS.UI?
     ListView: {
         propHandlers: {
+            currentItem: PropHandlers.focusProperty(React.PropTypes.any),
             headerComponent: PropHandlers.propertyWithMount("header"),
             footerComponent: PropHandlers.propertyWithMount("footer"),
 
