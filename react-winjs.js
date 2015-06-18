@@ -2520,7 +2520,6 @@ var ControlApis = updateWithDefaults({
         }
     },
     Rating: {},
-    SearchBox: {},
     SemanticZoom: {
         propHandlers: {
             zoomedInComponent: {
